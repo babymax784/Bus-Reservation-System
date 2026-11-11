@@ -32,4 +32,10 @@ def book_ticket(request,bus_id,template_name='bus/book_ticket_form.html'):
             return HttpResponseRedirect(receipt_url) 
 
     return render_to_response(template_name, locals(), context_instance=RequestContext(request))
-    
+
+@login_required
+def cancel_ticket(request, ticket_id):
+    ticket = get_object_or_404(bookAticket, id=ticket_id, user=request.user)
+    ticket.status = bookAticket.CANCELLED
+    ticket.save()
+    return HttpResponseRedirect(urlresolvers.reverse('account:my_account'))

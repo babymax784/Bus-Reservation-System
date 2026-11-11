@@ -6,9 +6,11 @@ class bookAticket(models.Model):
     #each indivitual status 
     PENDING = 'P'
     CONFIRMED = 'C'
+    CANCELLED = 'X'
     
     TICKET_STATUSES = ((PENDING,'Pending'),
-                      (CONFIRMED,'Confrimed'),)
+                      (CONFIRMED,'Confirmed'),
+                      (CANCELLED,'Cancelled'),)
     
     #booking Info
     booking_date = models.DateTimeField()

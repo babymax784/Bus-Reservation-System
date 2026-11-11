@@ -75,6 +75,13 @@
 								      	 <input type="hidden" name="fare_bus" value="{{bus_info.fare}}"/>
 								    </div>
 								 </div>
+								 <div class="row" id="total_fare_row" style="display:none;">
+									<div class="form-group col-xs-9">
+										<div class="alert alert-info" style="color:#000; margin-bottom:10px; padding:8px 12px; font-weight:bold;">
+											Total Fare: Rs <span id="total_fare_val">0</span>
+										</div>
+									</div>
+								 </div>
 								  <div class="row">
 									<div class="form-group col-xs-9">
 										<input type="submit" name="bookticket" value="Book Ticket"  class="btn btn-primary" />
@@ -114,10 +121,22 @@
     <!-- /.intro-header -->
     <script>
     $(function(){
-    $('[type="date"].min-today').prop('min', function(){
-        return new Date().toJSON().split('T')[0];
+        $('[type="date"].min-today').prop('min', function(){
+            return new Date().toJSON().split('T')[0];
+        });
+
+        $('#noofseats').on('input change', function() {
+            var seats = parseInt($(this).val()) || 0;
+            var fare = parseFloat('{{bus_info.fare}}') || 0;
+            if (seats > 0) {
+                var total = (seats * fare).toFixed(2);
+                $('#total_fare_val').text(total);
+                $('#total_fare_row').show();
+            } else {
+                $('#total_fare_row').hide();
+            }
+        });
     });
-});
     </script>
     
   {% endblock %}

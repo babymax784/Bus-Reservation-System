@@ -37,10 +37,16 @@
 								 	<td>{{ ticket.date|date }}</td>
 								 	<td>
 								 	{% if ticket.status == 'P' %}
-								 	<div class="alert alert-warning"> Pending </div>
-								 	{%else%}
-								 	<div class="alert alert-success"> Confirm </div>
-								 	{%endif%}
+								 	<div class="alert alert-warning" style="margin-bottom:6px; padding:6px;"> Pending </div>
+								 	{% elif ticket.status == 'X' %}
+								 	<div class="alert alert-danger" style="margin-bottom:6px; padding:6px;"> Cancelled </div>
+								 	{% else %}
+								 	<div class="alert alert-success" style="margin-bottom:6px; padding:6px;"> Confirmed </div>
+								 	{% endif %}
+								 	
+								 	{% if ticket.status != 'X' %}
+								 	<a href="{% url 'bookTicket:cancel_ticket' ticket_id=ticket.id %}" class="btn btn-danger btn-xs" onclick="return confirm('Are you sure you want to cancel this ticket?');">Cancel Ticket</a>
+								 	{% endif %}
 								 	
 								 	</td>
 								 </tr>
